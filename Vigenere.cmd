@@ -185,7 +185,7 @@ for /L %%j in (1 1 26) do  (
 :next1
 exit /b
 
-REM the formule to find encrypted lyrics
+REM the formule to find encrypted letters
 :moduler
 	set /a sum=%~1+%~2
 	set /a mod=%sum% %% 26
