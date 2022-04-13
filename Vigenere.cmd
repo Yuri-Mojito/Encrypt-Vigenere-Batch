@@ -134,7 +134,7 @@ for /l %%y in (1,1,%passlen%) do (
 )
 
 @ECHO.
-REM find the Encrypted Lyrics
+REM find the Encrypted Letters
 for /l %%w in (1,1,%passlen%) do (
 	call :findIdAndSetStr !encrypt[%%w].ID! abc str
 	set "encrypt[%%w].Letters=!str!"
