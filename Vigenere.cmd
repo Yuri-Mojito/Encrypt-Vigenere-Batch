@@ -6,25 +6,26 @@ setlocal enabledelayedexpansion
 color 0A 
 Rem color 0A 0=black and A=green Light colors of the console
 set TheABC=nam a b c d e f g h i j k l m n o p q r s t u v w x y z
+REM English system 26 Letters
 @set /a "cont=-1"
 
-set abc[0].Lyric=Lyric
+set abc[0].Letters=Letters
 set abc[0].ID=ID
 
-set key[0].Lyric=Lyric
+set key[0].Letters=Letters
 set key[0].ID=ID
 
-set pass[0].Lyric=Lyric
+set pass[0].Letters=Letters
 set pass[0].ID=ID
 
-set encrypt[0].Lyric=Lyric
+set encrypt[0].Letters=Letters
 set encrypt[0].ID=ID
 
 set "strEn="
 
 (for %%v in (%TheABC%) do (
 	set /a "cont=1+!cont!"
-	set "abc[!cont!].Lyric=%%v"
+	set "abc[!cont!].Letters=%%v"
 	set "abc[!cont!].ID=!cont!"
 ))
 
@@ -112,18 +113,18 @@ REM for to debug the arrays
 :continue
 REM save the arrays 
 for /l %%n in (1,1,%passlen%) do (
-	set "key[%%n].Lyric=!keyString[%%n]!"
-	set "pass[%%n].Lyric=!chaintwo[%%n]!"
+	set "key[%%n].Letters=!keyString[%%n]!"
+	set "pass[%%n].Letters=!chaintwo[%%n]!"
 )
 
 REM find ids for key
 for /l %%z in (1,1,%passlen%) do (
-	call :findStrAndSetId !key[%%z].Lyric! abc id
+	call :findStrAndSetId !key[%%z].Letters! abc id
 	set "key[%%z].ID=!id!"
 )
 REM find ids for pass
 for /l %%x in (1,1,%passlen%) do (
-	call :findStrAndSetId !pass[%%x].Lyric! abc id
+	call :findStrAndSetId !pass[%%x].Letters! abc id
 	set "pass[%%x].ID=!id!"
 )
 REM find the Encrypted ids 
@@ -136,12 +137,12 @@ for /l %%y in (1,1,%passlen%) do (
 REM find the Encrypted Lyrics
 for /l %%w in (1,1,%passlen%) do (
 	call :findIdAndSetStr !encrypt[%%w].ID! abc str
-	set "encrypt[%%w].Lyric=!str!"
+	set "encrypt[%%w].Letters=!str!"
 )
 
 REM Finally char to string Encrypted password
 for /l %%v in (1,1,%passlen%) do (
-	set "strEn=!strEn!!encrypt[%%v].Lyric!"
+	set "strEn=!strEn!!encrypt[%%v].Letters!"
 )
 REM Print the var
 call echo Encript=%strEn%
@@ -158,12 +159,12 @@ if defined %~1 for /f "delims=:" %%N in ('"(cmd /v:on /c echo(!%~1!&echo()|finds
 endlocal & if "%~2" neq "" (set %~2=%len%) else echo %len%
 exit /b
 
-REM function find the id from the Lyric
+REM function find the id from the Letters
 :findStrAndSetId
 set abc = Inner
 set "%~2=%abc%"
 for /L %%i in (1 1 26) do  (
-	if /I "%~1"=="!%~2[%%i].Lyric!" (
+	if /I "%~1"=="!%~2[%%i].Letters!" (
 		set /a "%~3=!%~2[%%i].ID!"
 		goto :next
 	)	
@@ -171,13 +172,13 @@ for /L %%i in (1 1 26) do  (
 :next
 exit /b
 
-REM function find the lyric from id
+REM function find the Letters from id
 :findIdAndSetStr
 set abc = Inner
 set "%~2=%abc%"
 for /L %%j in (1 1 26) do  (
 	if %~1 EQU !%~2[%%j].ID! (
-		set %~3=!%~2[%%j].Lyric!
+		set %~3=!%~2[%%j].Letters!
 		goto :next1
 	)	
 )
@@ -195,7 +196,7 @@ REM the formule to find encrypted lyrics
 	REM mod is 26 in english language 
 	REM the modular is zero but this
 	REM error can solved bc in all cases 
-	REM the lyric is y 
+	REM the Letter is y 
 	if %mod% EQU 0 ( 
 		set /a %~3=%div:~0,-3%*25
 		goto :jump
